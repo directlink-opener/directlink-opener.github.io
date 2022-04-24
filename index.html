@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct Test</title>
+</head>
+<body>
+    <script>
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+var id = url.searchParams.get("lensId");
+var category = url.searchParams.get("cat");
+if(category)
+var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+"&campaign="+category+'#Intent;end';
+else
+var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+'#Intent;end';
+//console.log(new_url)
+
+window.location = new_url;
+
+    </script>
+</body>
+</html>
