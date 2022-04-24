@@ -14,7 +14,7 @@ var id = url.searchParams.get("lensId");
 var category = url.searchParams.get("cat");
 var directUrl = url.searchParams.get("url");
 
-if(!directUrl){
+if(window.location.href.split('url=')<1){
 if(category)
 var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+"&campaign="+category+'#Intent;end';
 else
@@ -22,8 +22,9 @@ var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+'#I
 //console.log(new_url)
 }
 else{
-    console.log(directUrl)
-    var new_url = "intent:"+directUrl+"#Intent;end";
+   
+    var new_url = "intent:"+window.location.href.split('url=')[1]+"#Intent;end";
+    console.log(new_url)
 }
 window.location = new_url;
 
