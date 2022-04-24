@@ -23,7 +23,7 @@ var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+'#I
 }
 else{
    
-    var new_url = "intent:"+window.location.href.split('url=')[1]+"#Intent;end";
+    var new_url = "intent:"+decodeURIComponent(window.location.href.split('url=')[1])+"#Intent;end";
     console.log(new_url)
 }
 window.location = new_url;
