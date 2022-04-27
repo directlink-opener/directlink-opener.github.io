@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Krazyy Direct Link Opener</title>
+    <title>Direct Link Opener</title>
 </head>
 <body>
     <script>
+        //Fetch the whole base URL
         var url_string = window.location.href;
+
+        //Create a new URL object from that
         var url = new URL(url_string);
+
+//Extract the query parameters        
 var id = url.searchParams.get("lensId");
 var category = url.searchParams.get("cat");
-var directUrl = url.searchParams.get("url");
 console.log(window.location.href.split('url=').length)
+//Check if the url parameter is passed or not, didn't use the searchParams here since it would filter out the query params inside the URL passed 
+//So doing a string split and checking if it's length 2 then url param is present otherwise no
 if(window.location.href.split('url=').length<2){
+//If url params are empty, check if category param is present. If yes append it to target url along with intent scheme    
 if(category)
 var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+"&campaign="+category+'#Intent;end';
 else
@@ -22,7 +29,8 @@ var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+'#I
 //console.log(new_url)
 }
 else{
-   
+   //If url param is present priortize it and append it to target url with intent scheme
+   //Here decodeURIComponent is used since it was messing up the symbols "://" and url wouldn't work
     var new_url= "intent:"+decodeURIComponent(window.location.href.split('url=')[1])+"#Intent;end";
     console.log(new_url)
 }
