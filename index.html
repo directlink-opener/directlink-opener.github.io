@@ -26,15 +26,19 @@ if(category)
 var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+"&campaign="+category+'#Intent;end';
 else
 var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+'#Intent;end';
-//console.log(new_url)
+window.location = new_url;
 }
 else{
    //If url param is present priortize it and append it to target url with intent scheme
    //Here decodeURIComponent is used since it was messing up the symbols "://" and url wouldn't work
     var new_url= "intent:"+decodeURIComponent(window.location.href.split('url=')[1])+"#Intent;end";
-    console.log(new_url)
+    window.location = new_url;
+    setTimeout(`window.location = '${decodeURIComponent(window.location.href.split('url=')[1])}';`, 1000);
 }
-window.location = new_url;
+
+
+
+
     </script>
 </body>
 </html>
