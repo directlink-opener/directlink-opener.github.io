@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FK Camera Filters QR Code Generator</title>
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+</head>
+<body>
+    <select name="type" id="linkType">
+        <option value="lens_id">Lens ID & Category</option>
+        <option value="url">Full URL</option>
+       
+      </select>
+<input type="text" name="link" id="link_data" placeholder="Enter your link here & submit" hidden>
+<input type="text" name="lensId" id="lensID" placeholder="Lens Id">
+<input type="text" name="category" id="cat" placeholder="Lens Category">
+<button id="submit">Generate QR</button>
+<div id="canvas"></div>
+<button id="download_qr" disabled>Download QR</button>
+<script type="text/javascript">
+document.getElementById('linkType').onchange = function(){
+    console.log(document.getElementById('linkType').value)
+    if(document.getElementById('linkType').value ==='lens_id'){
+       document.getElementById('link_data').hidden = true;
+       document.getElementById('lensID').hidden = false;
+       document.getElementById('cat').hidden = false;
+    }
+    else{
+        document.getElementById('link_data').hidden = false;
+       document.getElementById('lensID').hidden = true;
+       document.getElementById('cat').hidden = true;
+    }
+}
+    var qrCodeObj = null;
+    document.getElementById('submit').onclick = function(){
+        if(qrCodeObj!=null){
+            document.getElementById("canvas").innerHTML = ''
+        }
+        var linkData = null;
+        if(document.getElementById('linkType').value ==='lens_id'){
+linkData = "http://directlink-opener.github.io/?lensId="+document.getElementById('lensID').value+"&cat="+ document.getElementById('cat').value;
+        }
+    else{
+       linkData= document.getElementById('link_data').value
+    }    
+
+    console.log(linkData)
+    qrCodeObj = new QRCodeStyling({
+        width: 300,
+        height: 300,
+        id:'qrcode',
+        type: "svg",
+        data: linkData,
+        image: "https://raw.githubusercontent.com/kgediya/RandomHosting/main/fklogo.png",
+        dotsOptions: {
+            color: "#007BDC",
+            type: "dots"
+        },
+        backgroundOptions: {
+            color: "#fff",
+        },
+        cornersSquareOptions:{
+            color:'#FDD83F',
+            type:"dots"
+        },
+        cornersDotOptions:{
+            type:'dots'
+        },
+        imageOptions: {
+            crossOrigin: "anonymous",
+            margin: 10,
+            imageSize:0.5
+        }
+    });
+    document.getElementById('download_qr').disabled = false;
+    qrCodeObj.append(document.getElementById("canvas"));
+   
+}
+document.getElementById('download_qr').onclick = function(){
+
+qrCodeObj.download({ name: "qr", extension: "png" });
+}
+</script>
+</body>
+</html>
