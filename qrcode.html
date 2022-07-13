@@ -8,13 +8,16 @@
 <body>
     <select name="type" id="linkType">
         <option value="lens_id">Lens ID & Category</option>
-        <option value="url">Full URL</option>
+        <option value="url" selected>Full URL</option>
        
       </select>
-<input type="text" name="link" id="link_data" placeholder="Enter your link here & submit" hidden>
-<input type="text" name="lensId" id="lensID" placeholder="Lens Id">
-<input type="text" name="category" id="cat" placeholder="Lens Category">
+      
+<input type="text" name="link" id="link_data" placeholder="Enter your link here & submit">
+<input type="text" name="lensId" id="lensID" placeholder="Lens Id" hidden>
+<input type="text" name="category" id="cat" placeholder="Lens Category" hidden>
 <button id="submit">Generate QR</button>
+<p1>Custom Logo</p1>
+<input type="file" name="logo" id="logo" accept="image/png, image/jpeg">
 <div id="canvas"></div>
 <button id="download_qr" disabled>Download QR</button>
 <script type="text/javascript">
@@ -32,7 +35,16 @@ document.getElementById('linkType').onchange = function(){
     }
 }
     var qrCodeObj = null;
+    var file =null;
     document.getElementById('submit').onclick = function(){
+        
+        try{
+            file = URL.createObjectURL(document.getElementById('logo').files[0])
+    
+        }catch{
+
+        }
+       
         if(qrCodeObj!=null){
             document.getElementById("canvas").innerHTML = ''
         }
@@ -51,7 +63,7 @@ linkData = "http://directlink-opener.github.io/?lensId="+document.getElementById
         id:'qrcode',
         type: "svg",
         data: linkData,
-        image: "https://raw.githubusercontent.com/kgediya/RandomHosting/main/fklogo.png",
+        image: file!=null?file:"https://raw.githubusercontent.com/kgediya/RandomHosting/main/fklogo.png",
         dotsOptions: {
             color: "#007BDC",
             type: "dots"
