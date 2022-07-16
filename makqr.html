@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FK Camera Filters QR Code Generator</title>
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+</head>
+<body>
+    <br>Select Style</br> <select name="type" id="linkType">
+        
+        <option value="insta" selected>Instagram</option>
+        <option value="facebook">Facebook</option>
+        <option value="snapchat">Snapchat</option>
+        <option value="twitter">Twitter</option>
+        <option value="youtube">Youtube</option>
+        <option value="discord">Discord</option>
+       
+      </select>
+      
+<input type="text" name="link" id="link_data" placeholder="Enter your link here & submit">
+<input type="text" name="lensId" id="lensID" placeholder="Lens Id" hidden>
+<input type="text" name="category" id="cat" placeholder="Lens Category" hidden>
+<button id="submit">Generate QR</button>
+<p1>Custom Logo</p1>
+<input type="file" name="logo" id="logo" accept="image/png, image/jpeg">
+<div id="canvas"></div>
+<button id="download_qr" disabled>Download QR</button>
+<canvas hidden></canvas>
+<script type="text/javascript">
+var themes = {
+    'snapchat':{
+        'logo':'https://raw.githubusercontent.com/kgediya/RandomHosting/main/snapLogo.png',
+        'primary-color':'#000',
+        'secondary-color':'#000',
+        'background-color':'#FFFD01'
+    },
+    'insta':{
+        'logo':'https://raw.githubusercontent.com/kgediya/RandomHosting/main/instagramLogo.png',
+        'primary-color':'#00E0B9',
+        'secondary-color':'#FF5C83',
+        'background-color':'#fff',
+        'gradient':[{ offset: 0, color: "#feda75" }, { offset: 0.2, color: "#fa7e1e" },{ offset: 0.4, color: "#d62976" },{ offset: 0.6, color: "#962fbf" },{ offset: 0.8, color: "#4f5bd5" }]
+    },
+    'facebook':{
+        'logo':'https://raw.githubusercontent.com/kgediya/RandomHosting/main/facebookLogo.png',
+        'primary-color':'#1778F2',
+        'secondary-color':'#1778F2',
+        'background-color':'#fff'
+    },
+    'youtube':{
+        'logo':'https://raw.githubusercontent.com/kgediya/RandomHosting/main/youtubeLogo.png',
+        'primary-color':'#FF0000',
+        'secondary-color':'#FF0000',
+        'background-color':'#fff'
+    },
+    'twitter':{
+        'logo':'https://raw.githubusercontent.com/kgediya/RandomHosting/main/twitterLogo.png',
+        'primary-color':'#00AEEF',
+        'secondary-color':'#00AEEF',
+        'background-color':'#fff'
+    },
+    'discord':{
+        'logo':'https://raw.githubusercontent.com/kgediya/RandomHosting/main/discord logo.png',
+        'primary-color':'#5865F2',
+        'secondary-color':'#5865F2',
+        'background-color':'#fff'
+    }
+
+}
+
+
+var themeStyle = document.getElementById('linkType').value;
+console.log(themeStyle)
+document.getElementById('linkType').onchange = function(){
+    console.log(document.getElementById('linkType').value)
+    themeStyle = document.getElementById('linkType').value
+}
+    var qrCodeObj = null;
+    var file =null;
+    var finalImage = null;
+    // get a reference to the file input
+    const fileInput = document.querySelector('#logo');
+
+    // get a reference to the output canvas
+    const canvas = document.querySelector('canvas');
+
+    // listen for the change event so we can capture the file
+    fileInput.addEventListener('change', (e) => {
+        // get a reference to the file
+        const img = e.target.files[0];
+        
+        // let's load the image data
+        const image = new Image();
+        image.onload = () => {
+            // use min size so we get a square
+            const size = Math.min(image.naturalWidth, image.naturalHeight);
+            console.log(size)
+            // let's update the canvas size
+            canvas.width = size;
+            canvas.height = size;
+
+            // draw image to canvas
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(image, 0, 0);
+
+            // only draw image where mask is
+            ctx.globalCompositeOperation = 'destination-in';
+
+            // draw our circle mask
+            ctx.fillStyle = '#000';
+            ctx.beginPath();
+            ctx.arc(
+                size * 0.5, // x
+                size * 0.5, // y
+                size * 0.5, // radius
+                0, // start angle
+                2 * Math.PI // end angle
+            );
+            ctx.fill();
+
+            // restore to default composite operation (is draw over current image)
+            ctx.globalCompositeOperation = 'source-over';
+
+            // show canvas
+            canvas.hidden = true;
+            finalImage = canvas.toDataURL('image/png');
+           
+        };
+        image.src = URL.createObjectURL(img)
+    });
+
+    document.getElementById('submit').onclick = function(){
+        
+        try{
+           
+            file = finalImage?finalImage: URL.createObjectURL(document.getElementById('logo').files[0])
+    
+        }catch{
+
+        }
+       
+        if(qrCodeObj!=null){
+            document.getElementById("canvas").innerHTML = ''
+        }
+        var linkData = null;
+        if(document.getElementById('linkType').value ==='lens_id'){
+linkData = "http://directlink-opener.github.io/?lensId="+document.getElementById('lensID').value+"&cat="+ document.getElementById('cat').value;
+        }
+    else{
+       linkData= document.getElementById('link_data').value
+    }    
+
+    console.log(linkData)
+    qrCodeObj = new QRCodeStyling({
+        width: 300,
+        height: 300,
+        id:'qrcode',
+        type: "svg",
+        data: linkData,
+        image: file!=null?file:themes[themeStyle]['logo'],
+        dotsOptions: {
+            gradient:{
+                type:'linear',
+                colorStops:themes[themeStyle]['gradient']?themes[themeStyle]['gradient']:[{ offset: 0, color: themes[themeStyle]['primary-color'] }, { offset: 1, color: themes[themeStyle]['primary-color'] }]
+            },
+            type: "dots"
+        },
+        backgroundOptions: {
+            color: themes[themeStyle]['background-color'],
+        },
+        cornersSquareOptions:{
+            gradient:{
+                type:'linear',
+                colorStops:themes[themeStyle]['gradient']?themes[themeStyle]['gradient']:[{ offset: 0, color: themes[themeStyle]['secondary-color'] }, { offset: 1, color: themes[themeStyle]['secondary-color'] }]
+      
+            },
+
+           
+            type:"dots"
+        },
+        cornersDotOptions:{
+            type:'dots'
+        },
+        imageOptions: {
+            crossOrigin: "anonymous",
+            margin: 10,
+            imageSize:0.5
+        }
+    });
+    document.getElementById('download_qr').disabled = false;
+    qrCodeObj.append(document.getElementById("canvas"));
+   
+}
+document.getElementById('download_qr').onclick = function(){
+
+qrCodeObj.download({ name: "qr", extension: "png" });
+}
+</script>
+</body>
+</html>
