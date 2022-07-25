@@ -59,7 +59,7 @@ document.getElementById('linkType').onchange = function(){
         }
         var linkData = null;
         if(document.getElementById('linkType').value ==='lens_id'){
-linkData = "http://directlink-opener.github.io/?id="+document.getElementById('lensID').value+"&cat="+ document.getElementById('cat').value+'singleMode='+document.getElementById('singleMode').checked;
+linkData = "http://directlink-opener.github.io/?id="+document.getElementById('lensID').value+"&cat="+ document.getElementById('cat').value+'&singleMode='+document.getElementById('singleMode').checked;
         }
     else{
        linkData= document.getElementById('link_data').value
