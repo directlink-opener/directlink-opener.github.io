@@ -23,9 +23,9 @@ console.log(window.location.href.split('url=').length)
 if(window.location.href.split('url=').length<2){
 //If url params are empty, check if category param is present. If yes append it to target url along with intent scheme    
 if(category)
-var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+"&campaign="+category+'#Intent;end';
+var new_url = "intent:http://www.flipkart.com/camera-filters?lensId="+id+"&campaign="+category+'#Intent;end';
 else
-var new_url = "intent:http://www.flipkart.com/camera?mode=arZone&lensId="+id+'#Intent;end';
+var new_url = "intent:http://www.flipkart.com/camera-filters?lensId="+id+'#Intent;end';
 window.location = new_url;
 }
 else{
