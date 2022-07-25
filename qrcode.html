@@ -15,9 +15,16 @@
 <input type="text" name="link" id="link_data" placeholder="Enter your link here & submit">
 <input type="text" name="lensId" id="lensID" placeholder="Lens Id" hidden>
 <input type="text" name="category" id="cat" placeholder="Lens Category" hidden>
-<button id="submit">Generate QR</button>
-<p1>Custom Logo</p1>
+<div id="singleModeContainer" hidden>
+Single Mode
+<input type="checkbox" name="singleMode" id="singleMode"><br><br>
+</div>
+
+
+<p1>Custom Logo</p1><br>
 <input type="file" name="logo" id="logo" accept="image/png, image/jpeg">
+<br><br>
+<button id="submit">Generate QR</button>
 <div id="canvas"></div>
 <button id="download_qr" disabled>Download QR</button>
 <script type="text/javascript">
@@ -27,11 +34,13 @@ document.getElementById('linkType').onchange = function(){
        document.getElementById('link_data').hidden = true;
        document.getElementById('lensID').hidden = false;
        document.getElementById('cat').hidden = false;
+       document.getElementById('singleModeContainer').hidden = false;
     }
     else{
         document.getElementById('link_data').hidden = false;
        document.getElementById('lensID').hidden = true;
        document.getElementById('cat').hidden = true;
+       document.getElementById('singleModeContainer').hidden = true;
     }
 }
     var qrCodeObj = null;
@@ -50,7 +59,7 @@ document.getElementById('linkType').onchange = function(){
         }
         var linkData = null;
         if(document.getElementById('linkType').value ==='lens_id'){
-linkData = "http://directlink-opener.github.io/?lensId="+document.getElementById('lensID').value+"&cat="+ document.getElementById('cat').value;
+linkData = "http://directlink-opener.github.io/?id="+document.getElementById('lensID').value+"&cat="+ document.getElementById('cat').value+'singleMode='+document.getElementById('singleMode').checked;
         }
     else{
        linkData= document.getElementById('link_data').value

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Direct Link Opener</title>
 </head>
+
 <body>
     <script>
         //Fetch the whole base URL
@@ -26,7 +27,7 @@ if(window.location.href.split('url=').length<2){
 var new_url =   "intent:https://www.flipkart.com/camera-filters?lensId="+id 
 if(category)
 new_url = new_url + '&campaign='+category;
-if(singleMode)
+if(singleMode==='true')
 new_url = new_url+'&carouselMode=single'
 
 new_url = new_url +'#Intent;end';
@@ -35,7 +36,10 @@ new_url = new_url +'#Intent;end';
 console.log(new_url);
 
 
+
 window.location = new_url;
+setTimeout(addErrorMsg,1000)
+
 }
 else{
    //If url param is present priortize it and append it to target url with intent scheme
@@ -46,7 +50,12 @@ else{
 }
 
 
+function addErrorMsg(){
+    var div = document.createElement('p');
+    div.innerHTML="<p> Sorry Bro I Don't Think It Is Working Between Us ☹️ <br> You Deserve Better "
+    document.body.append(div);
 
+}
 
     </script>
 </body>
