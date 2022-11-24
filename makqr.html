@@ -32,6 +32,8 @@
 <div id="canvas"></div>
 <button id="download_qr" disabled>Download QR</button>
 <canvas hidden></canvas>
+<br><br>
+<a href="http://" hidden id="link-gen"></a>
 <script type="module">
   
   var developermode = false;
@@ -213,6 +215,9 @@ linkData = 'http://directlink-opener.github.io/?key='+document.getElementById('l
     });
     document.getElementById('download_qr').disabled = false;
     qrCodeObj.append(document.getElementById("canvas"));
+    document.getElementById('link-gen').href = linkData;
+    document.getElementById('link-gen').innerText = linkData
+    document.getElementById('link-gen').hidden = false
    
 }
 document.getElementById('download_qr').onclick = function(){
