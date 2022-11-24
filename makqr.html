@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Krazyy Kustom QR Code Generator</title>
+    <link rel="icon" type="image/x-icon" href="./favicon-32x32.png">
     <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
  
 </head>
@@ -19,10 +20,13 @@
         <option value="youtube">Youtube</option>
         <option value="discord">Discord</option>
         <option value="flipkart">FK</option>
+        <option value="custom">Custom</option>
        
       </select>
      
-      
+ <input type="color" name="foreGround" id="foreground-color" hidden>
+ <input type="color" name="secondaryColor" id="secondary-color" hidden>
+ <input type="color" name="backGround" id="background-color" value="#fff" hidden>
 <input type="text" name="link" id="link_data" placeholder="Enter your link here & submit">
 <input type="text" name="lensId" id="lensID" placeholder="Lens Id" hidden>
 <input type="text" name="category" id="cat" placeholder="Lens Category" hidden>
@@ -88,6 +92,12 @@ var themes = {
         'primary-color':'#007BDC',
         'secondary-color':'#FDD83F',
         'background-color':'#fff'
+    },
+    'custom':{
+        'logo':'',
+        'primary-color':'#000',
+        'secondary-color':'#000',
+        'background-color':'#fff'
     }
 
 }
@@ -95,9 +105,21 @@ var themes = {
 
 var themeStyle = document.getElementById('linkType').value;
 console.log(themeStyle)
-document.getElementById('linkType').onchange = function(){
-    console.log(document.getElementById('linkType').value)
+document.getElementById('linkType').onchange = function(event){
+
     themeStyle = document.getElementById('linkType').value
+  if(event.target.value==='custom'){
+    document.getElementById('foreground-color').hidden = false
+    document.getElementById('background-color').hidden = false
+    document.getElementById('secondary-color').hidden = false
+  }
+  else{
+    document.getElementById('foreground-color').hidden = true
+    document.getElementById('background-color').hidden = true
+    document.getElementById('secondary-color').hidden = true
+
+  }
+
 }
     var qrCodeObj = null;
     var file =null;
@@ -154,7 +176,11 @@ document.getElementById('linkType').onchange = function(){
     });
 
     document.getElementById('submit').onclick = function(){
-        
+        if(document.getElementById('linkType').value=='custom'){
+            themes[themeStyle]['primary-color'] =  document.getElementById('foreground-color').value
+            themes[themeStyle]['secondary-color'] =  document.getElementById('secondary-color').value
+            themes[themeStyle]['background-color'] =  document.getElementById('background-color').value
+        }
         try{
            
             file = finalImage?finalImage: URL.createObjectURL(document.getElementById('logo').files[0])
