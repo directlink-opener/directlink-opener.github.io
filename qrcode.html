@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>FK Camera Filters QR Code Generator</title>
     <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <script src="./globalvariables.js" type="text/javascript"></script>
 </head>
 <body>
     <select name="type" id="linkType">
@@ -64,7 +65,7 @@ linkData = "http://directlink-opener.github.io/?id="+document.getElementById('le
     else{
        linkData= document.getElementById('link_data').value
     }    
-
+  
     console.log(linkData)
     qrCodeObj = new QRCodeStyling({
         width: 300,

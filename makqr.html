@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title>Krazyy Kustom QR Code Generator</title>
     <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+ 
 </head>
 <body>
+    <div id="secret" hidden>
+        Redirection Mode On
+      </div>
     <br>Select Style</br> <select name="type" id="linkType">
         
         <option value="insta" selected>Instagram</option>
@@ -17,6 +21,7 @@
         <option value="flipkart">FK</option>
        
       </select>
+     
       
 <input type="text" name="link" id="link_data" placeholder="Enter your link here & submit">
 <input type="text" name="lensId" id="lensID" placeholder="Lens Id" hidden>
@@ -27,7 +32,17 @@
 <div id="canvas"></div>
 <button id="download_qr" disabled>Download QR</button>
 <canvas hidden></canvas>
-<script type="text/javascript">
+<script type="module">
+  
+  var developermode = false;
+
+    const query = window.location.search;
+    const urlParams = new URLSearchParams(query)
+  if(parseInt(urlParams.get('redirection'))){
+    developermode = true;
+    document.getElementById('link_data').placeholder  = 'Enter The Redirection Key'
+  document.getElementById('secret').hidden = false;}
+
 var themes = {
     'snapchat':{
         'logo':'https://raw.githubusercontent.com/kgediya/RandomHosting/main/snapLogo.png',
@@ -64,7 +79,7 @@ var themes = {
         'logo':'https://raw.githubusercontent.com/kgediya/RandomHosting/main/discord logo.png',
         'primary-color':'#5865F2',
         'secondary-color':'#5865F2',
-        'background-color':'#fff'
+        'background-color':'#00'
     },
     'flipkart':{
         'logo':'https://raw.githubusercontent.com/kgediya/RandomHosting/main/fklogo.png',
@@ -154,6 +169,8 @@ document.getElementById('linkType').onchange = function(){
 linkData = "http://directlink-opener.github.io/?lensId="+document.getElementById('lensID').value+"&cat="+ document.getElementById('cat').value;
         }
     else{
+        if(developermode){
+linkData = 'http://directlink-opener.github.io/?key='+document.getElementById('link_data').value       }else
        linkData= document.getElementById('link_data').value
     }    
 

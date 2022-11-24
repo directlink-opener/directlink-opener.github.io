@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Redirection Portal</title>
+    
+</head>
+<body>
+    <p>Enter Key</p>
+    <input id="key" type="text">
+    <br>
+    <p>Enter Redirection URL</p>
+    <input id="url" type="text">
+    <br>
+    <br>
+    <button id="submit">Submit</button>
+</body>
+<script type="module">
+   
+    document.getElementById('submit').onclick = function(){
+        console.log(document.getElementById('key').value)
+        console.log(document.getElementById('url').value)
+        if(document.getElementById('key').value!=''&&document.getElementById('url').value!=''){
+    var redirectionkeys = localStorage.getItem('redirection_pairs')==null?{}:JSON.parse(localStorage.getItem('redirection_pairs'))
+    console.log(redirectionkeys)
+        redirectionkeys[document.getElementById('key').value] = document.getElementById('url').value
+    localStorage.setItem('redirection_pairs',redirectionkeys)
+    alert('Redirecion Pair Added')
+    }
+        else
+        alert('Check if both fields are not empty')
+    }
+</script>
+</html>
