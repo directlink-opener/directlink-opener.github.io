@@ -1,5 +1,5 @@
 
 const redirectionKeys = {
     'test':'https://www.krazyykrunal.com',
-    'nnnmeetup':'https://www.instagram.com/ar/395319042591376'
+    'nnnmeetup':'https://www.instagram.com/ar/507903087939009/'
 }
